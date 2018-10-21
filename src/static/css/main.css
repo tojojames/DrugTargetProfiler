@@ -1,0 +1,183 @@
+
+html {
+  position: relative;
+  min-height: 100%;
+  
+}
+body {
+  margin-bottom: 100px; /* Margin bottom by footer height */
+  font-family: "Helvetica neue",Helvetica,Arial,sans-serif;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px; /* Set the fixed height of the footer here */
+  line-height: 100px; /* Vertically center the text there */
+}
+
+/*input.sequence-textarea {
+
+    height: 4em;
+
+}*/
+.hint, input.hint {
+    font-family: "Helvetica neue",Helvetica,Arial,sans-serif!important;
+    font-style: italic;
+    color: #999!important;
+    font-size: 1em
+}
+.gi-1x{font-size: 1.5em;}
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+
+canvas{
+  display:block;
+  vertical-align:bottom;
+}
+
+
+
+/* ---- particles.js container ---- */
+input.search {
+    border-radius: 3rem;
+    font-size: 1.4rem;
+    border: .2rem solid #ccc;
+    margin: 1rem auto;
+    outline: #1693c0;
+    padding-top: 1rem;
+    padding-right: 2.5rem;
+    padding-bottom: 1rem;
+    padding-left: 0;
+    text-indent: 3rem;
+    width: 100%;
+    height: 5rem;
+}
+
+
+#particles-js{
+  width: 100%;
+  height: 90%;
+  background-color: #fff;
+  background-image: url('');
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+.panel h1 {
+    font-size: 1.4em;
+    text-align: center;
+    color: #353b41;
+    margin-top: -4px;
+}
+.panel .r-version {
+    display: block;
+    margin-bottom: 7px;
+    text-align: center;
+    font-size: .75em;
+}
+.panel h2 {
+    font-weight: 400;
+    font-size: 1.1em;
+    margin-bottom: 16px;
+    text-align: left;
+    line-height: 1.3em;
+}
+.panel li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #222;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    text-decoration: none;
+}
+span.example_small {
+
+    top: 2px;
+    width: 100%;
+    font-size: 13px;
+
+}
+
+.alert-error {
+color: #a94442;
+background-color: #f2dede;
+border-color: #ebccd1;
+
+}
+      
+.ui-autocomplete-loading {
+    background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
+  }
+/*.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: 0;
+    margin-left: 0;
+}*/
+
+/* file input Style*/
+
+.js .box__file
+{
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.js .box__file + label
+{
+  max-width: 80%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  font-weight: normal;
+  margin-bottom: -5px;
+}
+.js .box__file + label:hover strong,
+.box__file:focus + label strong,
+.box__file.has-focus + label strong
+{
+  color: #39bfd3;
+}
+.js .box__file:focus + label,
+.js .box__file.has-focus + label
+{
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
+}
+  .js .box__file + label *
+  {
+    /* pointer-events: none; */ /* in case of FastClick lib use */
+  }
+
+
+/*Chart css*/
+.chart{
+   min-width: 310px; 
+   height: 300px; 
+   max-width: 600px; 
+   margin: 0 auto ;
+}
+.search__box{
+    margin-bottom: 80px;
+}
+.search__box .form-group {
+     margin-bottom: 3px; 
+}
+.search__box .example_small {
+     margin-bottom: 3px; 
+}

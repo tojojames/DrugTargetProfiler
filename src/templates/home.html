@@ -1,0 +1,302 @@
+
+{% extends "base.html" %}
+ {% load staticfiles %}
+{% block head_css %}
+
+{% endblock %}
+{% block head_javascript %}
+
+{% endblock %}
+{% block content %}
+
+
+<div class="container marketing">
+      <div class="row featurette">
+        <div class="col-md-12">
+         <!--  <h2 class="featurette-heading">About <span class="text-muted">It'll blow your mind.</span></h2> -->
+        <p class="lead text-justify">
+           <b>Drug Target Profiler</b> is an interactive web-application for compound-target interaction network visualization and analysis </p>
+        </div>
+      </div>
+        
+<div class='search__box'>
+<form action="/networks/network"  method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+  <div class="form-group">
+    <div class="input-group">
+    <input id="multiple_identifiers" class="form-control input-lg queryInput uploadListsTextarea sequence-textarea hint" type="text" placeholder="Enter list of compounds/proteins (e.g Gefitinib, sunitinib, Ly-294002)"name="search_terms">
+    <span class="input-group-btn">
+        <button class="btn btn-default btn-lg" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+      </span>
+
+    </div>
+  </div>
+
+    <div class="form-group row">
+
+      <div class="col-md-8 js ">
+
+
+             
+                <span class=" example_small"><a href="#" class="string_example example_small" onclick="document.getElementById(&quot;multiple_identifiers&quot;).value=&quot;gefitinib, abl1, sunitinib, adra1a&quot;;return false;">Search example</a></span> | 
+                <span class=" example_small"><a data-toggle="tooltip" title="Download template" href="/static/example/upload_data_template.xlsx" download class="string_example example_small">
+
+                <span class="glyphicon glyphicon-download"></span> Download template</a></span> |
+              <span class="example_small">
+              <input  class="box__file" id="id_data_file" name="data_file" title="" type="file">
+              <label for="id_data_file"> <span class="glyphicon glyphicon-upload"></span>  <strong> Upload file</strong> </label>
+              </span>   
+      </div>
+
+   
+  </div>
+
+
+</form>
+</div>
+
+  <div class="panel panel-default">
+
+  <div class="panel-body">
+  <div class='row'>
+        <div class='col-md-1'></div>
+         <div class='col-md-5'>
+          <div id="chart1" class='chart'></div>
+
+         </div>
+         <div class='col-md-5'>
+          <div id="chart2" class='chart'></div>
+
+         </div> 
+          <div class='col-md-1' ></div>
+      </div> 
+  </div> 
+  </div>
+</div>
+    
+    
+
+</div>
+
+{% endblock content %}
+{% block footer %} 
+    <footer class="footer">
+      <div class="container text-center">
+         <img ID="ImageFooter"  width="80%"  src="{% static 'img/footer.png' %}" />
+      </div>
+    </footer>
+
+{% endblock footer %}
+
+{% block js-foot %}
+<script type="text/javascript">
+    
+$( function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+ 
+   function split( val ) {
+      return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+      return split( term ).pop();
+    }
+ 
+    $( "#multiple_identifiers" )
+      // don't navigate away from the field on tab when selecting an item
+      .on( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      })
+      .autocomplete({
+        source: function( request, response ) {
+          $.getJSON( "/autosuggest/", {
+            term: extractLast( request.term )
+          }, response );
+        },
+        search: function() {
+          // custom minLength
+          var term = extractLast( this.value );
+          if ( term.length < 2 ) {
+            return false;
+          }
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
+      });
+
+
+    
+
+    Highcharts.chart('chart1', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie',
+        style: {
+            fontFamily: '"Helvetica neue",Helvetica,Arial,sans-serif'
+        }
+    },
+    title: {
+        text: 'Target protein classification'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'protiens',
+        colorByPoint: true,
+        data: [{
+            name: 'Epigenetic regulator',
+            y: 118
+        }, {
+            name: 'GPCR',
+            y: 744,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Enzyme',
+            y: 3029
+        }, {
+            name: 'Ion channel',
+            y: 301
+        }, {
+            name: 'Kinase',
+            y: 541
+        }, {
+            name: 'Nuclear receptor',
+            y: 151
+        }, {
+            name: 'Other',
+            y: 1331
+        }, {
+            name: 'Transporter',
+            y: 216
+        }]
+    }]
+});
+Highcharts.chart('chart2', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie',
+        style: {
+            fontFamily: '"Helvetica neue",Helvetica,Arial,sans-serif'
+        }
+    },
+    title: {
+        text: 'Compound clinical phases'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'compounds',
+        colorByPoint: true,
+        data: [{
+            name: 'Phase I',
+            y: 144
+        }, {
+            name: 'Phase II',
+            y: 318,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Phase III',
+            y: 443
+        }, {
+            name: 'Aproved',
+            y: 1884
+        }]
+    }]
+});  
+
+
+
+ });
+
+
+</script>
+
+<script type="text/javascript">
+ 
+// document.getElementsByTagName("body")[0].style = "height:95% !important"
+
+</script>
+<!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
+<script src="static/js/HighChartsMin.js"></script>
+
+{% endblock js-foot %} 
+
